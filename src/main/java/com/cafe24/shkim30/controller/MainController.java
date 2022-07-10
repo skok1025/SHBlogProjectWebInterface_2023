@@ -10,4 +10,10 @@ public class MainController {
     public String basicTemplate() {
         return "basic-template";
     }
+
+    @GetMapping({"/", "/index"})
+    public String indexPage() {
+        return "index";
+    }
+
 }

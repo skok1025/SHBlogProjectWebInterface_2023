@@ -20,9 +20,10 @@
             </section>
           </li>
           <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/blog/admin/category" th:text="#{nav.category}">카테고리 관리</a></li>
-          <li class="nav-item"><a class="nav-link" href="/blog/add" th:text="#{nav.blog}">게시물 등록</a></li>
-          <li class="nav-item"><a class="nav-link" href="/blog/login" th:text="#{nav.login}">로그인</a></li>
+          <li th:if="${session.loginUserId!=null}" class="nav-item"><a class="nav-link" href="/blog/admin/category" th:text="#{nav.category}">카테고리 관리</a></li>
+          <li th:if="${session.loginUserId!=null}" class="nav-item"><a class="nav-link" href="/blog/add" th:text="#{nav.blog}">게시물 등록</a></li>
+          <li th:if="${session.loginUserId==null}" class="nav-item"><a class="nav-link" href="/blog/login" th:text="#{nav.login}">로그인</a></li>
+          <li th:if="${session.loginUserId!=null}" class="nav-item"><a class="nav-link" href="/blog/logout" th:text="#{nav.logout}">로그아웃</a></li>
           <!--
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
