@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Header -->
+        <div th:replace="fragment/header :: base"></div>
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper" class="min-height-800">
+                <!-- Top navigation-->
+                <div th:replace="fragment/top_navbar :: base"></div>
+                <div th:replace="~{fragment/page_explain :: copyParam ('페이지의 타이틀', '페이지에 대한 상세설명')}"></div>
+                <div class="container-fluid">
+                    내용물 위치
+                </div>
+            </div>
+        </div>
+
+        <!-- body asset -->
+        <div th:replace="fragment/body_asset :: base"></div>
+
+        <!-- footer -->
+        <div th:replace="fragment/footer :: base"></div>
+    </body>
+</html>

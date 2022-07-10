@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Header -->
+    <div th:replace="fragment/header :: base"></div>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper" class="content">
+        <!-- Top navigation-->
+        <div th:replace="fragment/top_navbar :: base"></div>
+        <div th:replace="~{fragment/page_explain :: copyParam ('회원가입', '해당 페이지는 \'미팅위치 알림이 \' 이용을 위해 회원가입을 위한 페이지입니다.')}"></div>
+        <div class="container-fluid">
+            <form id="joinForm" action="/meet/member/join" th:action th:object="${member}" method="post">
+                <div class="form-group input-group-sm">
+                    <label class="join-field-label" for="userId">- ID: </label><input type="text" id="userId" th:field="*{userId}" th:errorclass="field-error">
+                    <div class="field-error" th:errors="*{userId}">
+                        아이디 입력값 오류
+                    </div>
+                    <div style="clear:both;"></div>
+                    <label class="join-field-label" for="password">- PW: </label><input type="password" id="password" th:field="*{password}" th:errorclass="field-error">
+                    <div class="field-error" th:errors="*{password}">
+                        PW 입력값 오류
+                    </div>
+                    <div style="clear:both;"></div>
+                    <input type="hidden" id="placeX" name="placeX">
+                    <input type="hidden" id="placeY" name="placeY">
+            </form>
+                    <label class="" for="password">- 회원님의 위치를 등록해주세요. </label>
+                    <p>-- 정확한 위치등록을 위해, 지명 검색 시, 정확한 주소를 입력해주세요. ex) 성수이로 137 (지번포함한 주소로 입력)</p>
+                    <div id="drawingMap"></div>
+                    <div id="menu_wrap" class="bg_white">
+                        <div class="option">
+                            <div>
+                                <form onsubmit="searchPlaces(); return false;">
+                                    <input type="text" id="keyword" size="15" class="form-control" placeholder="지역명을 입력하세요.">
+                                    <button class="btn btn-sm btn-warning" type="submit">이동하기</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg join-btn" type="button" onclick="saveJoinData()">회원가입</button>
+                </div>
+        </div>
+    </div>
+</div>
+
+<!-- body asset -->
+<div th:replace="fragment/body_asset :: base"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f3831b2266d6261515391c00c51ac628&libraries=drawing,services"></script>
+
+<script th:inline="javascript">
+    // Drawing Manager로 도형을 그릴 지도 div
+    var drawingMapContainer = document.getElementById('drawingMap'),
+        drawingMap = {
+            center: new kakao.maps.LatLng(37.47656681089448, 126.9820356715939), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var drawingMap = new kakao.maps.Map(drawingMapContainer, drawingMap);
+
+    // Drawing Manager에서 가져온 데이터 중 다각형을 아래 지도에 표시하는 함수입니다
+    function drawPolygon(polygons) {
+        var len = polygons.length, i = 0;
+
+        for (; i < len; i++) {
+            var path = pointsToPath(polygons[i].points);
+            var style = polygons[i].options;
+            var polygon = new kakao.maps.Polygon({
+                map: map,
+                path: path,
+                strokeColor: style.strokeColor,
+                strokeOpacity: style.strokeOpacity,
+                strokeStyle: style.strokeStyle,
+                strokeWeight: style.strokeWeight,
+                fillColor: style.fillColor,
+                fillOpacity: style.fillOpacity
+            });
+
+            overlays.push(polygon);
+        }
+    }
+
+    // Drawing Manager에서 가져온 데이터 중
+    // 선과 다각형의 꼭지점 정보를 kakao.maps.LatLng객체로 생성하고 배열로 반환하는 함수입니다
+    function pointsToPath(points) {
+        var len = points.length,
+            path = [],
+            i = 0;
+
+        for (; i < len; i++) {
+            var latlng = new kakao.maps.LatLng(points[i].y, points[i].x);
+            path.push(latlng);
+        }
+
+        return path;
+    }
+
+// 키워드 검색을 요청하는 함수입니다
+function searchPlaces() {
+
+    var keyword = document.getElementById('keyword').value;
+
+    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('키워드를 입력해주세요!');
+        return false;
+    }
+    // 장소 검색 객체를 생성합니다
+    var ps = new kakao.maps.services.Places();
+
+    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+    ps.keywordSearch( keyword, placesSearchCB);
+}
+
+// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB(data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+        // 정상적으로 검색이 완료됐으면
+        // 검색 목록과 마커를 표출합니다
+        displayPlaces(data);
+
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+
+    } else if (status === kakao.maps.services.Status.ERROR) {
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+
+    }
+}
+
+// 검색 결과 목록과 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+    var menuEl = document.getElementById('menu_wrap'),
+    bounds = new kakao.maps.LatLngBounds(),
+    listStr = '';
+
+    for ( var i=0; i<places.length; i++ ) {
+        // 마커를 생성하고 지도에 표시합니다
+        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x);
+
+        if (i == 0) {
+            var marker = addMarker(placePosition, i);
+            setMyLocation(places[i].x, places[i].y);
+        }
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+    }
+
+    menuEl.scrollTop = 0;
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    drawingMap.setBounds(bounds);
+}
+
+// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position, idx, title) {
+        marker = new kakao.maps.Marker({
+            position: position // 마커의 위치
+        });
+
+    marker.setMap(drawingMap); // 지도 위에 마커를 표출합니다
+    return marker;
+}
+
+function setMyLocation(x, y) {
+    $('#placeX').val(x);
+    $('#placeY').val(y);
+}
+
+function saveJoinData() {
+   if ($('#userId').val() == '') {
+       alert('ID 값을 입력해주세요.');
+       return;
+   }
+
+   if ($('#password').val() == '') {
+       alert('패스워드를 입력해주세요.');
+       return;
+   }
+
+   if ($('#placeX').val() == '') {
+       alert('회원님의 위치를 등록해주세요');
+       return;
+   }
+
+   $('#joinForm').submit();
+}
+
+    </script>
+<!-- footer -->
+<div th:replace="fragment/footer :: base"></div>
+</body>
+</html>

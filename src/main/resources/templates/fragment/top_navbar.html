@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Page content-->
+<div th:fragment="base">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+      <div><h1 th:text="#{app.title}">미팅위치 알림이</h1></div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <section>
+              <div class="search">
+                <form action="">
+                  <input class="btn_text form-control" type="text" placeholder="블로그 게시물 검색">
+                  <button class="btn_search"></button>
+                </form>
+              </div>
+            </section>
+          </li>
+          <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin/category" th:text="#{nav.category}">카테고리 관리</a></li>
+          <li class="nav-item"><a class="nav-link" href="/blog-add" th:text="#{nav.blog}">게시물 등록</a></li>
+          <li class="nav-item"><a class="nav-link" href="/login" th:text="#{nav.login}">로그인</a></li>
+          <!--
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#!" th:text="#{nav.logout}">Action</a>
+              <a class="dropdown-item" href="#!">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#!">Something else here</a>
+            </div>
+          </li>
+          -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+</body>
+</html>
