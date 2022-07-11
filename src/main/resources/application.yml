@@ -4,3 +4,22 @@ server:
     context-path: /blog
 constant:
   backendUrl: http://localhost:8080
+
+---
+# profiles value 할당 (방법1)
+# java -jar 파일명.jar --spring.profiles.active=profiles값 (택1)
+# java -Dspring.profiles.active=profiles값 -jar 파일명.jar (택2)
+# profiles value 할당 (방법2)
+# Edit Configurations > Run/Debug Configurations > Active Profiles 값 할당
+---
+spring:
+  profiles: real
+  datasource:
+    url: jdbc:mariadb://localhost:3306/shkim30
+  redis:
+    host: 127.0.0.1
+    port: 6379
+server:
+  port: 8080
+constant:
+  backendUrl: http://shkim30.cafe24.com

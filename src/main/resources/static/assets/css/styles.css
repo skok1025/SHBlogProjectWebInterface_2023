@@ -270,9 +270,16 @@ pre code {
   word-break: normal;
 }
 
+.code-div {
+  background-color : #272822;
+  color: #ffffff;
+  font-color: #ffffff;
+}
+
 code {
   font-size: 0.875em;
-  color: #d63384;
+  background-color : #272822;
+  color: #ffffff;
   word-wrap: break-word;
 }
 a > code {

@@ -10,9 +10,18 @@
             <div id="page-content-wrapper" class="min-height-800">
                 <!-- Top navigation-->
                 <div th:replace="fragment/top_navbar :: base"></div>
-                <div th:replace="~{fragment/page_explain :: copyParam ('페이지의 타이틀', '페이지에 대한 상세설명')}"></div>
+                <div th:replace="~{fragment/page_explain :: copyParam ('', '')}"></div>
                 <div class="container-fluid">
-                    내용물 위치
+                    <th:block th:each="blogData : ${blogList}">
+                        <div class="border-end border-bottom border-secondary border-2 rounded rounded-3 p-sm-1 m-md-1">
+                            <div><span class="fw-bold" th:text="${blogData.no}"> no. 타이틀</span></div>
+                            <div>
+                                <span class="fst-italic" th:text="${blogData.ins_timestamp}"></span> ,
+                                <span class="fst-italic" th:text="${blogData.member_id}"></span>
+                            </div>
+                            <div th:utext="${blogData.contents}"></div>
+                        </div>
+                    </th:block>
                 </div>
             </div>
         </div>

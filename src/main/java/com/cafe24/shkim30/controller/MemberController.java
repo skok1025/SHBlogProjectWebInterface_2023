@@ -28,6 +28,7 @@ public class MemberController {
 
         if (loginMember != null) {
             session.setAttribute("loginUserId", loginMember.getMemberId());
+            session.setAttribute("loginUserNo", loginMember.getNo());
             session.setAttribute("loginMemberName", loginMember.getName());
 
             return "redirect:/";

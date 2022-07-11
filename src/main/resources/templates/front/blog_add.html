@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Header -->
+    <div th:replace="fragment/header :: base"></div>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper" class="min-height-800">
+        <!-- Top navigation-->
+        <div th:replace="fragment/top_navbar :: base"></div>
+        <div th:replace="~{fragment/page_explain :: copyParam ('게시물 등록', '게시물을 등록하는 페이지입니다. 블로그에 남길 게시물을 작성해주세요.')}"></div>
+        <div class="container-fluid">
+            <form action="/blog/add" method="post">
+                <textarea id="summernote" name="contents"></textarea>
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-secondary my-2 col-md-1">등록</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            //여기 아래 부분
+            $('#summernote').summernote({
+                  height: 300,                 // 에디터 높이
+                  lang: "ko-KR",					// 한글 설정
+                  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+
+            });
+        });
+    </script>
+</div>
+
+<!-- body asset -->
+<div th:replace="fragment/body_asset :: base"></div>
+
+<!-- footer -->
+<div th:replace="fragment/footer :: base"></div>
+</body>
+</html>
