@@ -13,11 +13,11 @@
                 <div th:replace="~{fragment/page_explain :: copyParam ('', '')}"></div>
                 <div class="container-fluid">
                     <th:block th:each="blogData : ${blogList}">
-                        <div class="border-end border-bottom border-secondary border-2 rounded rounded-3 p-sm-1 m-md-1">
-                            <div><span class="fw-bold" th:text="${blogData.no}"> no. 타이틀</span></div>
+                        <div class="border-end border-bottom border-secondary border-2 rounded rounded-3 p-sm-3 m-md-3">
+                            <div><h2 class="bg-light bg-gradient">게시글의 제목</h2></div>
                             <div>
-                                <span class="fst-italic" th:text="${blogData.ins_timestamp}"></span> ,
-                                <span class="fst-italic" th:text="${blogData.member_id}"></span>
+                                작성자아이디 : <span class="fst-italic" th:text="${blogData.member_id}"></span>,
+                                <span class="fst-italic" th:text="${blogData.ins_timestamp}"></span>
                             </div>
                             <div th:utext="${blogData.contents}"></div>
                         </div>
