@@ -11,15 +11,15 @@ constant:
 # java -Dspring.profiles.active=profiles값 -jar 파일명.jar (택2)
 # profiles value 할당 (방법2)
 # Edit Configurations > Run/Debug Configurations > Active Profiles 값 할당
+# .\gradlew build -x test -Pprofile=prod
+# 빌드시 테스트 진행하지 않고 prod 로 실행
 ---
 spring:
-  profiles: real
-  datasource:
-    url: jdbc:mariadb://localhost:3306/shkim30
-  redis:
-    host: 127.0.0.1
-    port: 6379
+  profiles:
+    active: prod
 server:
   port: 8080
+  servlet:
+    context-path: /
 constant:
   backendUrl: http://shkim30.cafe24.com

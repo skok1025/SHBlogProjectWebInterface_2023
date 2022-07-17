@@ -13,6 +13,7 @@
         <div th:replace="~{fragment/page_explain :: copyParam ('게시물 등록', '게시물을 등록하는 페이지입니다. 블로그에 남길 게시물을 작성해주세요.')}"></div>
         <div class="container-fluid">
             <form action="/blog/add" method="post">
+                <input id="title" name="title" class="form-control" placeholder="제목을 입력해주세요." style="margin-bottom: 10px;">
                 <textarea id="summernote" name="contents"></textarea>
                 <div class="col text-center">
                     <button type="submit" class="btn btn-secondary my-2 col-md-1">등록</button>

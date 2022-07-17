@@ -11,6 +11,7 @@ public class BlogInsertDTO {
 
     @NotEmpty(message = "contents is a required value.")
     private String contents;
+    private String title;
 
     private Long member_no;
     private Long category_no;

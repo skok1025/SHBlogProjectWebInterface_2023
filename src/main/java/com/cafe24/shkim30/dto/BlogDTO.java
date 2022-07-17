@@ -20,6 +20,8 @@ public class BlogDTO {
     private String member_id;
     private String member_name;
 
+    private String title;
+
 
     private Long category_no;
     private String category_name;
