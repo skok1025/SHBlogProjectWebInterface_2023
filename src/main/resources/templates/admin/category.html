@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Header -->
+        <div th:replace="fragment/header :: base"></div>
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper" class="min-height-800">
+                <!-- Top navigation-->
+                <div th:replace="fragment/top_navbar :: base"></div>
+                <div th:replace="~{fragment/page_explain :: copyParam ('카테고리 관리', '해당 페이지는 카테고리 등록/수정/삭제를 위한 페이지입니다.')}"></div>
+                <div class="container-fluid content">
+                    <div class="category_list_area">
+                        <div class="list_btn"></div>
+                        <div class="tree">
+                            <th:block th:each="categoryData : ${categoryList}">
+                                <div th:data-no="${categoryData.no}" class="category_content" th:classappend="${categoryData.level > 1} ? 'sub-category' : ''">
+                                    <ion-icon th:if="${categoryData.level > 1}" name="return-down-forward-outline"></ion-icon>
+                                    <ion-icon name="reader-outline"></ion-icon>
+                                    <span th:text="${categoryData.name}">카테고리1</span>
+                                    <ion-icon name="add-circle-outline" th:if="${categoryData.level == 1}"></ion-icon>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- body asset -->
+        <div th:replace="fragment/body_asset :: base"></div>
+
+        <!-- footer -->
+        <div th:replace="fragment/footer :: base"></div>
+    </body>
+</html>

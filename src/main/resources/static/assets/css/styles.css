@@ -11510,3 +11510,22 @@ form{
 .blog-title {
     font-family: BMJUA
 }
+
+.content {
+    padding: 35px 40px 70px;
+}
+
+.category_list_area {
+    border:1px solid #dee2e6;
+    width: 221px;
+    padding: 10px;
+}
+
+.category_content {
+    font-family: BMHANNAAir;
+    cursor:pointer
+}
+
+.sub-category {
+    text-indent: 10%;
+}

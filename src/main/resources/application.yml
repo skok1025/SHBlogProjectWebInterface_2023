@@ -1,10 +1,6 @@
-server:
-  port: 8081
-  servlet:
-    context-path: /blog
-constant:
-  backendUrl: http://localhost:8080
-
+spring:
+  profiles:
+    active: dev
 ---
 # profiles value 할당 (방법1)
 # java -jar 파일명.jar --spring.profiles.active=profiles값 (택1)
@@ -14,12 +10,3 @@ constant:
 # .\gradlew build -x test -Pprofile=prod
 # 빌드시 테스트 진행하지 않고 prod 로 실행
 ---
-spring:
-  profiles:
-    active: prod
-server:
-  port: 8080
-  servlet:
-    context-path: /
-constant:
-  backendUrl: http://shkim30.cafe24.com
