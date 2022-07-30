@@ -3,6 +3,49 @@
     <head>
         <!-- Header -->
         <div th:replace="fragment/header :: base"></div>
+        <script th:inline="javascript">
+            $(document).ready(function(){
+                $('#category_add_btn').click(function() {
+                    var newCategoryDiv = '<div class="category_content"><ion-icon name="reader-outline"></ion-icon><input class="new-category-item" type="text" style="width:80%;"></div>';
+                    $('#category_tree').append(newCategoryDiv);
+                });
+
+                $(".subcategory_add_btn").click(function() {
+                   console.log($(this).parent().data('no'));
+
+                   var newSubCategoryDiv = '<ion-icon name="return-down-forward-outline"></ion-icon><div class="category_content sub-category"><ion-icon name="reader-outline"></ion-icon><input data-parentno=' + $(this).parent().data('no') + ' class="new-category-item" type="text" style="width:80%;"></div>';
+                   $(this).parent().append(newSubCategoryDiv);
+                });
+
+                $(document).on("keyup", '.new-category-item',  function(key) {
+                    if(key.keyCode==13) {
+                        var postData = {
+                            "level" : 1,
+                            "member_no" : [[${session.loginUserNo}]],
+                            "name": $(this).val()
+                        };
+
+                        if ($(this).data('parentno') > 0) {
+                            postData["parent_no"] = $(this).data('parentno');
+                        }
+
+                        $.ajax({
+                            url: [[${backendUrl}]] + "/blog-api/blog/category",
+                            type: "post",
+                            contentType: "application/json", //post 방식으로  JSON Type으로 데이터를 보낼 때
+                            dataType: "json",
+                            data: JSON.stringify(postData),
+                            success: function(response){
+                                location.reload();
+                            },
+                            error: function(jqXHR, status, e){
+                                console.error(status + ":" + e);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -13,14 +56,16 @@
                 <div th:replace="~{fragment/page_explain :: copyParam ('카테고리 관리', '해당 페이지는 카테고리 등록/수정/삭제를 위한 페이지입니다.')}"></div>
                 <div class="container-fluid content">
                     <div class="category_list_area">
-                        <div class="list_btn"></div>
-                        <div class="tree">
+                        <div class="list_btn">
+                            <button id="category_add_btn" type="button" class="btn btn-secondary">대분류 카테고리 추가</button>
+                        </div>
+                        <div id="category_tree" class="tree">
                             <th:block th:each="categoryData : ${categoryList}">
                                 <div th:data-no="${categoryData.no}" class="category_content" th:classappend="${categoryData.level > 1} ? 'sub-category' : ''">
                                     <ion-icon th:if="${categoryData.level > 1}" name="return-down-forward-outline"></ion-icon>
                                     <ion-icon name="reader-outline"></ion-icon>
                                     <span th:text="${categoryData.name}">카테고리1</span>
-                                    <ion-icon name="add-circle-outline" th:if="${categoryData.level == 1}"></ion-icon>
+                                    <ion-icon class="subcategory_add_btn" name="add-circle-outline" th:if="${categoryData.level == 1}"></ion-icon>
                                 </div>
                             </th:block>
                         </div>

@@ -11523,9 +11523,21 @@ form{
 
 .category_content {
     font-family: BMHANNAAir;
+    cursor:default
+}
+
+.subcategory_add_btn {
     cursor:pointer
 }
 
 .sub-category {
     text-indent: 10%;
+}
+
+.list_btn {
+    padding-bottom: 10px;
+}
+
+.list_btn > button {
+    zoom: 0.7
 }
