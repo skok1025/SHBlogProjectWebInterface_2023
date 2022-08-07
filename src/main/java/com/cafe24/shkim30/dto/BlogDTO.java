@@ -25,4 +25,7 @@ public class BlogDTO {
 
     private Long category_no;
     private String category_name;
+
+    private Long parent_category_no;
+    private String parent_category_name;
 }

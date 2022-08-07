@@ -11,7 +11,9 @@
                 <!-- Top navigation-->
                 <div th:replace="fragment/top_navbar :: base"></div>
                 <div th:replace="~{fragment/page_explain :: copyParam ('', '')}"></div>
-                <div class="container-fluid">
+
+                <div th:replace="fragment/category_navbar :: base"></div>
+                <div class="container-fluid blogList">
                     <th:block th:each="blogData : ${blogList}">
                         <div class="border-end border-bottom border-secondary border-2 rounded rounded-3 p-sm-3 m-md-3">
                             <div class="bg-light bg-gradient">
@@ -20,36 +22,44 @@
                                     작성자아이디 : <span class="fst-italic" th:text="${blogData.member_id}"></span>,
                                     <span class="fst-italic" th:text="${blogData.ins_timestamp}"></span>
                                 </div>
+                                <div>
+                                    카테고리 :
+                                    <span class="fst-italic" th:text="${blogData.parent_category_name}"></span>
+                                    <ion-icon th:if="${blogData.parent_category_name != null}" name="return-down-forward-outline"></ion-icon>
+                                    <span class="fst-italic" th:text="${blogData.category_name}"></span>
+                                </div>
                             </div>
                             <hr/>
                             <div th:utext="${blogData.contents}"></div>
                         </div>
                     </th:block>
                 </div>
-
-                <!-- paging button -->
-                <nav aria-label="Page navigation example ">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" th:href="@{/?currentPage={page} (page = ${pagination.prevPage})}" aria-label="Previous">
-                                <span aria-hidden="true">◀</span>
-                            </a>
-                        </li>
-                        <th:block  th:with="start = ${pagination.nowStart}, end = ${pagination.nowEnd}">
-                            <li class="page-item" th:classappend="${pagination.currentPage} == ${pageButton} ? active"
-                                th:with="start = ${pagination.nowStart}, end = ${pagination.nowEnd}"
-                                th:each="pageButton : ${#numbers.sequence(start, end)}">
-
-                                <a class="page-link" th:href="@{/?currentPage={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+                <div style="clear:both;"></div>
+                <div>
+                    <!-- paging button -->
+                    <nav aria-label="Page navigation example ">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{/?currentPage={page}&category_no={category_no} (page = ${pagination.prevPage}, category_no = ${category_no})}" aria-label="Previous">
+                                    <span aria-hidden="true">◀</span>
+                                </a>
                             </li>
-                        </th:block>
-                        <li class="page-item">
-                            <a class="page-link" th:href="@{?currentPage={page} (page = ${pagination.nextPage})}" aria-label="Next">
-                                <span aria-hidden="true">▶</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                            <th:block  th:with="start = ${pagination.nowStart}, end = ${pagination.nowEnd}">
+                                <li class="page-item" th:classappend="${pagination.currentPage} == ${pageButton} ? active"
+                                    th:with="start = ${pagination.nowStart}, end = ${pagination.nowEnd}"
+                                    th:each="pageButton : ${#numbers.sequence(start, end)}">
+
+                                    <a class="page-link" th:href="@{/?currentPage={page}&category_no={category_no} (page = ${pageButton}, category_no = ${category_no})}" th:text=${pageButton}></a>
+                                </li>
+                            </th:block>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{?currentPage={page}&category_no={category_no} (page = ${pagination.nextPage}, category_no = ${category_no})}" aria-label="Next">
+                                    <span aria-hidden="true">▶</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
 

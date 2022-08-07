@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="aside" th:fragment="base">
+  <!-- Page content-->
+  <th:block th:each="categoryData : ${categoryList}">
+    <div th:data-no="${categoryData.no}" class="category_content" th:classappend="${categoryData.level > 1} ? 'sub-category' : ''">
+      <ion-icon th:if="${categoryData.level > 1}" name="return-down-forward-outline"></ion-icon>
+      <ion-icon name="reader-outline"></ion-icon>
+      <a class="a_deco_none" th:href="@{/(category_no=${categoryData.no})}" href="/blog?category_no=${categoryData.no}"><span th:text="${categoryData.name}">카테고리1</span></a>
+    </div>
+  </th:block>
+</div>
+</body>
+</html>

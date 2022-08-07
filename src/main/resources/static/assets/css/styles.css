@@ -11523,7 +11523,7 @@ form{
 
 .category_content {
     font-family: BMHANNAAir;
-    cursor:default
+    cursor:pointer
 }
 
 .subcategory_add_btn {
@@ -11540,4 +11540,39 @@ form{
 
 .list_btn > button {
     zoom: 0.7
+}
+
+.aside {
+    position: sticky;
+    top: 100px;
+    right: 10px;
+    float: right;
+    width: 15%;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+@media screen and (max-width:767px) {
+/* 모바일 */
+    .aside {
+        display:none;
+    }
+
+    .blogList {
+        width: 100% !important;
+    }
+}
+
+.blogList {
+    float: left;
+    width: 70%;
+}
+
+.selected-menu {
+    font-weight: bold;
+}
+
+.a_deco_none {
+      text-decoration: none;
+       color: black;
 }

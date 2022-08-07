@@ -28,9 +28,20 @@ public class BlogProvidor {
         return jsonresult.getData();
     }
 
-    public List<BlogDTO> getMainBlogList(int startIndex) {
+    public List<BlogDTO> getMainBlogList(int startIndex, Integer categoryNo) {
+        String callUrl = BACKEND_URL + "/blog-api/blog/contents-list?page_content_size=5&start_index=" + startIndex;
+
+        if (categoryNo != null) {
+            callUrl += "&category_no=" + categoryNo;
+        }
+
+        log.info("callurl:{}", callUrl);
+
         JSONResultBlogDTOList jsonresult =
-                restTemplate.getForObject(BACKEND_URL + "/blog-api/blog/contents-list?page_content_size=5&start_index=" + startIndex, JSONResultBlogDTOList.class);
+                restTemplate.getForObject(
+                        callUrl ,
+                        JSONResultBlogDTOList.class
+                );
 
         return jsonresult.getData();
     }
