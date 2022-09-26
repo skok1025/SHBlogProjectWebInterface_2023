@@ -45,10 +45,6 @@ public class MainController {
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("category_no", category_no);
 
-        log.info("pagination: {}",blogService.getPaging(currentPage));
-        log.info("categoryList: {}", categoryList);
-
-
         return "index";
     }
 

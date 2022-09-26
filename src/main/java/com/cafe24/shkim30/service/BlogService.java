@@ -30,9 +30,6 @@ public class BlogService {
         Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
         Integer startIndex = libFrontPaging.getStartRecordNum(currentPage, totalCount, pageSize);
 
-        log.info("currentPage: {}", currentPage);
-        log.info("startIndex : {}", startIndex);
-
         return blogProvidor.getMainBlogList(startIndex, categoryNo);
     }
 

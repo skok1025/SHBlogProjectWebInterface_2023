@@ -35,8 +35,6 @@ public class BlogProvidor {
             callUrl += "&category_no=" + categoryNo;
         }
 
-        log.info("callurl:{}", callUrl);
-
         JSONResultBlogDTOList jsonresult =
                 restTemplate.getForObject(
                         callUrl ,
