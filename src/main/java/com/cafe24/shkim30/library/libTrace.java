@@ -2,19 +2,21 @@ package com.cafe24.shkim30.library;
 
 import com.cafe24.shkim30.library.trace.TraceId;
 import com.cafe24.shkim30.library.trace.TraceStatus;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
-public class libTrace {
+public class libTrace implements LogTrace {
     private static final String START_PREFIX = "-->";
     private static final String COMPLETE_PREFIX = "<--";
     private static final String EX_PREFIX = "<X-";
 
+    private ThreadLocal<TraceId> traceId = new ThreadLocal<>();
 
     public TraceStatus begin(String message) {
-        TraceId traceId = new TraceId();
+        syncTraceInfo();
+        TraceId traceId = this.traceId.get();
         Long startTimems = System.currentTimeMillis();
 
         log.info("[{}] {}{}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message);
@@ -23,15 +25,14 @@ public class libTrace {
         return new TraceStatus(traceId, startTimems, message);
     }
 
-    // v2 에서 추가
-    public TraceStatus beginSync(TraceId beforeTraceId, String message) {
-        TraceId nextId = beforeTraceId.createNextId();
-        Long startTimems = System.currentTimeMillis();
+    private void syncTraceInfo() {
+        TraceId traceInfo = this.traceId.get(); // 이미 기존의 trace 정보
 
-        log.info("[{}] {}{}", nextId.getId(), addSpace(START_PREFIX, nextId.getLevel()), message);
-
-        // 로그 출력
-        return new TraceStatus(nextId, startTimems, message);
+        if (traceInfo == null) {
+            this.traceId.set(new TraceId());
+        } else {
+            this.traceId.set(traceInfo.createNextId());
+        }
     }
 
     public void end(TraceStatus status) {
@@ -54,6 +55,19 @@ public class libTrace {
             log.info("[{}] {}{} time={}ms ex={}", traceId.getId(),
                     addSpace(EX_PREFIX, traceId.getLevel()), status.getMessage(), resultTimeMs,
                     e.toString());
+
+            this.traceId.remove();
+        }
+
+        realeaseTraceId();
+    }
+
+    private void realeaseTraceId() {
+        TraceId traceId = this.traceId.get();
+        if (traceId.isFirstLevel()) {
+            this.traceId.remove();
+        } else {
+            this.traceId.set(traceId.createPreviousId());
         }
     }
 

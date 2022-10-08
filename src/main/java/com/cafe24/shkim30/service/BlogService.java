@@ -2,6 +2,8 @@ package com.cafe24.shkim30.service;
 
 import com.cafe24.shkim30.dto.BlogDTO;
 import com.cafe24.shkim30.dto.BlogInsertDTO;
+import com.cafe24.shkim30.library.LogTrace;
+import com.cafe24.shkim30.library.trace.TraceStatus;
 import com.cafe24.shkim30.providor.BlogProvidor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,19 +24,45 @@ public class BlogService {
     private int listSize = 5;
     private int pageSize = 5;
 
+    private final LogTrace trace;
+
     public BlogInsertDTO addBlog(BlogInsertDTO blogInsertDTO) {
         return blogProvidor.insertBlog(blogInsertDTO);
     }
 
     public List<BlogDTO> getMainBlogList(Integer currentPage, Integer categoryNo) {
-        Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
-        Integer startIndex = libFrontPaging.getStartRecordNum(currentPage, totalCount, pageSize);
+        TraceStatus logStatus = null;
 
-        return blogProvidor.getMainBlogList(startIndex, categoryNo);
+        try {
+            logStatus = trace.begin("BlogService::getMainBlogList");
+
+            Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
+            Integer startIndex = libFrontPaging.getStartRecordNum(currentPage, totalCount, pageSize);
+
+            List<BlogDTO> mainBlogList = blogProvidor.getMainBlogList(startIndex, categoryNo);
+
+            trace.end(logStatus);
+
+            return mainBlogList;
+        } catch (Exception e) {
+            trace.exception(logStatus, e);
+            throw e;
+        }
     }
 
     public Object getPaging(Integer currentPage) {
-        Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
-        return libFrontPaging.getPagingVariable(currentPage, totalCount, pageSize, listSize);
+        TraceStatus logStatus = null;
+
+        try {
+            logStatus = trace.begin("BlogService::getPaging");
+            Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
+            Object pagingVariable = libFrontPaging.getPagingVariable(currentPage, totalCount, pageSize, listSize);
+            trace.end(logStatus);
+
+            return pagingVariable;
+        } catch (Exception e) {
+            trace.exception(logStatus, e);
+            throw e;
+        }
     }
 }

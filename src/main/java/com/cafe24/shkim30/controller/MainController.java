@@ -1,6 +1,8 @@
 package com.cafe24.shkim30.controller;
 
 import com.cafe24.shkim30.dto.CategoryDTO;
+import com.cafe24.shkim30.library.LogTrace;
+import com.cafe24.shkim30.library.trace.TraceStatus;
 import com.cafe24.shkim30.service.BlogService;
 import com.cafe24.shkim30.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,8 @@ public class MainController {
     private final BlogService blogService;
     private final CategoryService categoryService;
 
+    private final LogTrace trace;
+
     @GetMapping("/basic-template")
     public String basicTemplate() {
         return "basic-template";
@@ -36,16 +40,27 @@ public class MainController {
             @RequestParam(defaultValue = "1") Integer currentPage,
             @RequestParam(defaultValue = "") Integer category_no) {
 
-        if (httpSession != null) {
-            model.addAttribute("blogList", blogService.getMainBlogList(currentPage, category_no));
-            model.addAttribute("pagination", blogService.getPaging(currentPage));
+        TraceStatus logStatus = null;
+
+        try {
+            logStatus = trace.begin("MainController::indexPage");
+
+            if (httpSession != null) {
+                model.addAttribute("blogList", blogService.getMainBlogList(currentPage, category_no));
+                model.addAttribute("pagination", blogService.getPaging(currentPage));
+            }
+
+            List<CategoryDTO> categoryList = categoryService.getCategoryList(null);
+            model.addAttribute("categoryList", categoryList);
+            model.addAttribute("category_no", category_no);
+
+            trace.end(logStatus);
+
+            return "index";
+        } catch (Exception e) {
+            trace.exception(logStatus, e);
+            throw e;
         }
-
-        List<CategoryDTO> categoryList = categoryService.getCategoryList(null);
-        model.addAttribute("categoryList", categoryList);
-        model.addAttribute("category_no", category_no);
-
-        return "index";
     }
 
 }
