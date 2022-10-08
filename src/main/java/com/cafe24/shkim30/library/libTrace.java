@@ -45,6 +45,9 @@ public class libTrace implements LogTrace {
 
     private void complete(TraceStatus status, Exception e) {
         Long stopTimeMs = System.currentTimeMillis();
+
+        if (status == null) return;
+
         long resultTimeMs = stopTimeMs - status.getStatusTimeMs();
         TraceId traceId = status.getTraceId();
         if (e == null) {

@@ -24,45 +24,23 @@ public class BlogService {
     private int listSize = 5;
     private int pageSize = 5;
 
-    private final LogTrace trace;
-
     public BlogInsertDTO addBlog(BlogInsertDTO blogInsertDTO) {
         return blogProvidor.insertBlog(blogInsertDTO);
     }
 
     public List<BlogDTO> getMainBlogList(Integer currentPage, Integer categoryNo) {
-        TraceStatus logStatus = null;
+        Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
+        Integer startIndex = libFrontPaging.getStartRecordNum(currentPage, totalCount, pageSize);
 
-        try {
-            logStatus = trace.begin("BlogService::getMainBlogList");
+        List<BlogDTO> mainBlogList = blogProvidor.getMainBlogList(startIndex, categoryNo);
 
-            Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
-            Integer startIndex = libFrontPaging.getStartRecordNum(currentPage, totalCount, pageSize);
-
-            List<BlogDTO> mainBlogList = blogProvidor.getMainBlogList(startIndex, categoryNo);
-
-            trace.end(logStatus);
-
-            return mainBlogList;
-        } catch (Exception e) {
-            trace.exception(logStatus, e);
-            throw e;
-        }
+        return mainBlogList;
     }
 
     public Object getPaging(Integer currentPage) {
-        TraceStatus logStatus = null;
+        Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
+        Object pagingVariable = libFrontPaging.getPagingVariable(currentPage, totalCount, pageSize, listSize);
 
-        try {
-            logStatus = trace.begin("BlogService::getPaging");
-            Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
-            Object pagingVariable = libFrontPaging.getPagingVariable(currentPage, totalCount, pageSize, listSize);
-            trace.end(logStatus);
-
-            return pagingVariable;
-        } catch (Exception e) {
-            trace.exception(logStatus, e);
-            throw e;
-        }
+        return pagingVariable;
     }
 }
