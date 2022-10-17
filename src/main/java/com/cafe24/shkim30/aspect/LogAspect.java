@@ -49,31 +49,35 @@ public class LogAspect {
 //
 //        session.removeAttribute("logStatus::"+Thread.currentThread().toString() + "::" + className + "::" + methodName);
 //    }
+//    @AfterThrowing(pointcut = "execution(* *..controller.*.*(..)) || execution(* *..service.*.*(..))", throwing = "e")
+//    public void afterExec(JoinPoint joinpoint, Exception e) throws Throwable{
+//        String className = joinpoint.getTarget().getClass().getName();
+//
+//        MethodSignature signature = (MethodSignature)joinpoint.getSignature();
+//        String methodName = signature.getMethod().getName();
+//
+//        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getSession();
+//        TraceStatus logStatus = (TraceStatus) session.getAttribute("logStatus::"+Thread.currentThread().toString() + "::" + className + "::" + methodName);
+//
+//        trace.exception(logStatus, e);
+//
+//        session.removeAttribute("logStatus::"+Thread.currentThread().toString() + "::" + className + "::" + methodName);
+//    }
 
     @Around("execution(* *..controller.*.*(..)) || execution(* *..service.*.*(..)) || execution(* *..providor.*.*(..))")
     public Object setLogTrace(ProceedingJoinPoint pjp) throws Throwable {
         String targetName = pjp.getTarget().getClass().getName() + " :: " + pjp.getSignature().getName();
         TraceStatus logStatus = trace.begin(targetName);
 
-        Object result = pjp.proceed(); // method 실행
+        Object result = null;
 
-        trace.end(logStatus);
-
-        return result;
-    }
-
-    @AfterThrowing(pointcut = "execution(* *..controller.*.*(..)) || execution(* *..service.*.*(..))", throwing = "e")
-    public void afterExec(JoinPoint joinpoint, Exception e) throws Throwable{
-        String className = joinpoint.getTarget().getClass().getName();
-
-        MethodSignature signature = (MethodSignature)joinpoint.getSignature();
-        String methodName = signature.getMethod().getName();
-
-        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getSession();
-        TraceStatus logStatus = (TraceStatus) session.getAttribute("logStatus::"+Thread.currentThread().toString() + "::" + className + "::" + methodName);
-
-        trace.exception(logStatus, e);
-
-        session.removeAttribute("logStatus::"+Thread.currentThread().toString() + "::" + className + "::" + methodName);
+        try {
+            result = pjp.proceed(); // method 실행
+            trace.end(logStatus);
+        } catch (Exception e) {
+            trace.exception(logStatus, e);
+        } finally {
+            return result;
+        }
     }
 }
