@@ -27,6 +27,7 @@
                                     <span class="fst-italic" th:text="${blogData.parent_category_name}"></span>
                                     <ion-icon th:if="${blogData.parent_category_name != null}" name="return-down-forward-outline"></ion-icon>
                                     <span class="fst-italic" th:text="${blogData.category_name}"></span>
+                                    <a th:href="@{/edit/{no}(no = ${blogData.no})}" style="float:right;">게시글 수정</a>
                                 </div>
                             </div>
                             <hr/>
