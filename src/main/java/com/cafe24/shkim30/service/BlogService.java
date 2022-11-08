@@ -2,6 +2,7 @@ package com.cafe24.shkim30.service;
 
 import com.cafe24.shkim30.dto.BlogDTO;
 import com.cafe24.shkim30.dto.BlogInsertDTO;
+import com.cafe24.shkim30.dto.BlogUpdateDTO;
 import com.cafe24.shkim30.library.LogTrace;
 import com.cafe24.shkim30.library.trace.TraceStatus;
 import com.cafe24.shkim30.providor.BlogProvidor;
@@ -42,5 +43,13 @@ public class BlogService {
         Object pagingVariable = libFrontPaging.getPagingVariable(currentPage, totalCount, pageSize, listSize);
 
         return pagingVariable;
+    }
+
+    public BlogDTO getBlog(Long blogNo) {
+        return blogProvidor.getBlog(blogNo);
+    }
+
+    public void updateBlog(BlogUpdateDTO blogUpdateDTO) {
+        blogProvidor.updateBlog(blogUpdateDTO);
     }
 }
