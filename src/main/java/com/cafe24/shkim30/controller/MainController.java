@@ -3,6 +3,7 @@ package com.cafe24.shkim30.controller;
 import com.cafe24.shkim30.dto.CategoryDTO;
 import com.cafe24.shkim30.service.BlogService;
 import com.cafe24.shkim30.service.CategoryService;
+import com.cafe24.shkim30.template.TimeLogTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ public class MainController {
     private final BlogService blogService;
     private final CategoryService categoryService;
 
+    private final TimeLogTemplate timeLogTemplate;
+
     @GetMapping("/basic-template")
     public String basicTemplate() {
         return "basic-template";
@@ -32,16 +35,18 @@ public class MainController {
             HttpSession httpSession,
             @RequestParam(defaultValue = "1") Integer currentPage,
             @RequestParam(defaultValue = "") Integer category_no) {
-        if (httpSession != null) {
-            model.addAttribute("blogList", blogService.getMainBlogList(currentPage, category_no));
-            model.addAttribute("pagination", blogService.getPaging(currentPage));
-        }
+        return timeLogTemplate.execute("MainPage", () -> {
+            if (httpSession != null) {
+                model.addAttribute("blogList", blogService.getMainBlogList(currentPage, category_no));
+                model.addAttribute("pagination", blogService.getPaging(currentPage));
+            }
 
-        List<CategoryDTO> categoryList = categoryService.getCategoryList(null);
-        model.addAttribute("categoryList", categoryList);
-        model.addAttribute("category_no", category_no);
+            List<CategoryDTO> categoryList = categoryService.getCategoryList(null);
+            model.addAttribute("categoryList", categoryList);
+            model.addAttribute("category_no", category_no);
 
-        return "index";
+            return "index";
+        });
     }
 
 }
