@@ -15,7 +15,7 @@ public class MemberProvidor {
 
     @Value("${constant.backendUrl}")
     public String BACKEND_URL;
-
+//
     public MemberDTO selectMemberById(String memberId) {
         JSONResultMember jsonresult =
                 restTemplate.getForObject(BACKEND_URL + "/blog-api/member/"+ memberId
