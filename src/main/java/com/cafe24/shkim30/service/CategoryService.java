@@ -17,13 +17,8 @@ public class CategoryService {
     private final CategoryProvidor categoryProvidor;
 
     public List<CategoryDTO> getCategoryList(Long loginUserNo) {
-
         if (loginUserNo == null) {
-            if ("dev".equals(PROFILES_ACTIVE)) {
-                loginUserNo = 16L;
-            } else {
-                loginUserNo = 1L;
-            }
+            loginUserNo = 1L;
         }
 
         return categoryProvidor.getCategoryList(loginUserNo);
