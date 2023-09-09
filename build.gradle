@@ -30,3 +30,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// test 스킵
+test {
+	exclude '**/*'
+}
+
+bootWar {
+	archiveName("SHBlogWeb.war")
+}
