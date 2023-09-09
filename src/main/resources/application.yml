@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: local
 ---
 # profiles value 할당 (방법1)
 # java -jar 파일명.jar --spring.profiles.active=profiles값 (택1)
