@@ -5,4 +5,4 @@ server:
   servlet:
     context-path: /blog
 constant:
-  backendUrl: http://localhost:8080
+  backendUrl: http://localhost:8082
