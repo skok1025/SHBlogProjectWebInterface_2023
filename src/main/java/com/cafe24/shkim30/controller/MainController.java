@@ -34,16 +34,18 @@ public class MainController {
             Model model,
             HttpSession httpSession,
             @RequestParam(defaultValue = "1") Integer currentPage,
-            @RequestParam(defaultValue = "") Integer category_no) {
+            @RequestParam(defaultValue = "") Integer category_no,
+            @RequestParam(required = false) String keyword) {
         return timeLogTemplate.execute("MainPage", () -> {
             if (httpSession != null) {
-                model.addAttribute("blogList", blogService.getMainBlogList(currentPage, category_no));
+                model.addAttribute("blogList", blogService.getMainBlogList(currentPage, category_no, keyword));
                 model.addAttribute("pagination", blogService.getPaging(currentPage));
             }
 
             List<CategoryDTO> categoryList = categoryService.getCategoryList(null);
             model.addAttribute("categoryList", categoryList);
             model.addAttribute("category_no", category_no);
+            model.addAttribute("keyword", keyword);
 
             return "index";
         });

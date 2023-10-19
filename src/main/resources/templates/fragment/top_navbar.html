@@ -12,8 +12,8 @@
           <li class="nav-item">
             <section>
               <div class="search">
-                <form action="">
-                  <input class="btn_text form-control" type="text" placeholder="블로그 게시물 검색">
+                <form action="/blog">
+                  <input name="keyword" class="btn_text form-control" type="text" placeholder="블로그 게시물 검색" th:value="${keyword}">
                   <button class="btn_search"></button>
                 </form>
               </div>

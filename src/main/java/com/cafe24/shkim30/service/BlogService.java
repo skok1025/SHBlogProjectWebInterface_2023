@@ -29,11 +29,11 @@ public class BlogService {
         return blogProvidor.insertBlog(blogInsertDTO);
     }
 
-    public List<BlogDTO> getMainBlogList(Integer currentPage, Integer categoryNo) {
+    public List<BlogDTO> getMainBlogList(Integer currentPage, Integer categoryNo, String keyword) {
         Integer totalCount = 5000; // TODO 총 블로그 개수 작업필요.
         Integer startIndex = libFrontPaging.getStartRecordNum(currentPage, totalCount, pageSize);
 
-        List<BlogDTO> mainBlogList = blogProvidor.getMainBlogList(startIndex, categoryNo);
+        List<BlogDTO> mainBlogList = blogProvidor.getMainBlogList(startIndex, categoryNo, keyword);
 
         return mainBlogList;
     }

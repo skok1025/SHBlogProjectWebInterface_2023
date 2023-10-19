@@ -26,11 +26,15 @@ public class BlogProvidor {
         return jsonresult.getData();
     }
 
-    public List<BlogDTO> getMainBlogList(int startIndex, Integer categoryNo) {
+    public List<BlogDTO> getMainBlogList(int startIndex, Integer categoryNo, String keyword) {
         String callUrl = BACKEND_URL + "/blog-api/blog/contents-list?page_content_size=5&start_index=" + startIndex;
 
         if (categoryNo != null) {
             callUrl += "&category_no=" + categoryNo;
+        }
+
+        if (keyword != null) {
+            callUrl += "&keyword=" + keyword;
         }
 
         JSONResultBlogDTOList jsonresult =

@@ -38,7 +38,7 @@
                     <nav aria-label="Page navigation example ">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="page-link" th:href="@{/?currentPage={page}&category_no={category_no} (page = ${pagination.prevPage}, category_no = ${category_no})}" aria-label="Previous">
+                                <a class="page-link" th:href="@{/?currentPage={page}&category_no={category_no}&keyword={keyword} (page = ${pagination.prevPage}, category_no = ${category_no}, keyword=${keyword})}" aria-label="Previous">
                                     <span aria-hidden="true">◀</span>
                                 </a>
                             </li>
@@ -47,11 +47,11 @@
                                     th:with="start = ${pagination.nowStart}, end = ${pagination.nowEnd}"
                                     th:each="pageButton : ${#numbers.sequence(start, end)}">
 
-                                    <a class="page-link" th:href="@{/?currentPage={page}&category_no={category_no} (page = ${pageButton}, category_no = ${category_no})}" th:text=${pageButton}></a>
+                                    <a class="page-link" th:href="@{/?currentPage={page}&category_no={category_no}&keyword={keyword} (page = ${pageButton}, category_no = ${category_no}, keyword=${keyword})}" th:text=${pageButton}></a>
                                 </li>
                             </th:block>
                             <li class="page-item">
-                                <a class="page-link" th:href="@{?currentPage={page}&category_no={category_no} (page = ${pagination.nextPage}, category_no = ${category_no})}" aria-label="Next">
+                                <a class="page-link" th:href="@{?currentPage={page}&category_no={category_no}&keyword={keyword} (page = ${pagination.nextPage}, category_no = ${category_no}, keyword=${keyword})}" aria-label="Next">
                                     <span aria-hidden="true">▶</span>
                                 </a>
                             </li>
