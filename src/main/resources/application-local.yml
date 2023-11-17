@@ -6,3 +6,4 @@ server:
     context-path: /blog
 constant:
   backendUrl: http://localhost:8082
+  fconlineUserName: 유니폼어색한메시

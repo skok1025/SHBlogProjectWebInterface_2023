@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="aside" th:fragment="base">
-  <!-- Page content-->
+  <!-- Page content category-->
   <th:block th:each="categoryData : ${categoryList}">
     <div th:data-no="${categoryData.no}" class="category_content" th:classappend="${categoryData.level > 1} ? 'sub-category' : ''">
       <ion-icon th:if="${categoryData.level > 1}" name="return-down-forward-outline"></ion-icon>
@@ -10,6 +10,23 @@
       <a class="a_deco_none" th:href="@{/(category_no=${categoryData.no})}" href="/blog?category_no=${categoryData.no}"><span th:text="${categoryData.name}">카테고리1</span></a>
     </div>
   </th:block>
+  <div id="fconline-tab">
+    <h4>My <img style="zoom:0.1 !important" th:src="@{/assets/fconline/logo.png}" alt="FC Online"></h4>
+    <ul>
+      <li><span class="bold-font">닉네임: </span><span th:text="${fcOnlineInfoDTO.basicUserInfoDTO.nickname}"></span></li>
+      <li><span class="bold-font">레벨: </span><span th:text="${fcOnlineInfoDTO.basicUserInfoDTO.level}"></span></li>
+      <th:block th:each="maxDivisionInfo : ${fcOnlineInfoDTO.maxDivisionInfoList}">
+        <li>
+          <span class="bold-font" th:text="${maxDivisionInfo.matchTypeName}"></span>
+          <span class="bold-font"> 최고등급: </span>
+          <ul>
+            <li><span th:text="${maxDivisionInfo.divisionName}"></span><img th:src="@{/assets/fconline/{division}.png (division = ${maxDivisionInfo.division})}"></li>
+            <li><span class="smalltxt">"</span><span class="smalltxt" th:text="${maxDivisionInfo.achievementDate}"></span><span class="smalltxt">" 에 달성</span></li>
+          </ul>
+        </li>
+      </th:block>
+    </ul>
+  </div>
 </div>
 </body>
 </html>

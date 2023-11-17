@@ -6,3 +6,4 @@ server:
     context-path: /
 constant:
   backendUrl: http://shkim30.cafe24.com
+  fconlineUserName: 유니폼어색한메시

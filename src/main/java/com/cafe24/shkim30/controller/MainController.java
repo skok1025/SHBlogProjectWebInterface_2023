@@ -1,11 +1,14 @@
 package com.cafe24.shkim30.controller;
 
 import com.cafe24.shkim30.dto.CategoryDTO;
+import com.cafe24.shkim30.dto.fconline.FcOnlineInfoDTO;
 import com.cafe24.shkim30.service.BlogService;
 import com.cafe24.shkim30.service.CategoryService;
+import com.cafe24.shkim30.service.FcOnlineService;
 import com.cafe24.shkim30.template.TimeLogTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +24,13 @@ public class MainController {
 
     private final BlogService blogService;
     private final CategoryService categoryService;
+    private final FcOnlineService fcOnlineService;
 
     private final TimeLogTemplate timeLogTemplate;
+
+    @Value("${constant.fconlineUserName}")
+    public String fcOnlineUserName;
+
 
     @GetMapping("/basic-template")
     public String basicTemplate() {
@@ -46,6 +54,12 @@ public class MainController {
             model.addAttribute("categoryList", categoryList);
             model.addAttribute("category_no", category_no);
             model.addAttribute("keyword", keyword);
+
+
+            FcOnlineInfoDTO fcOnlineInfoDTO = fcOnlineService.getInfoDTO(fcOnlineUserName);
+            model.addAttribute("fcOnlineInfoDTO", fcOnlineInfoDTO);
+
+            System.out.println(fcOnlineInfoDTO);
 
             return "index";
         });

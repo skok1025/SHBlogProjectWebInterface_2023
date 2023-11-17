@@ -11553,6 +11553,30 @@ form{
     border-radius: 10px;
 }
 
+#fconline-tab {
+    background-color: #f7f7f7;
+    border: 2px solid #333;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+}
+
+#fconline-tab span {
+    font-size: 0.75em;
+}
+
+#fconline-tab img {
+    zoom: 0.3 !important;
+}
+
+#fconline-tab .smalltxt {
+    font-size: 0.6em;
+}
+
+#fconline-tab .bold-font {
+    font-weight: bold;
+}
+
 @media screen and (max-width:767px) {
 /* 모바일 */
     .aside {
