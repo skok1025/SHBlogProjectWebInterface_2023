@@ -17,13 +17,11 @@ public class SeoulInfoProvidor {
     public String BACKEND_URL;
 
     public CultureInfoDTO selectCulttureList() {
-        JSONResultCultureInfo jsonresult =
+        CultureInfoDTO result =
                 restTemplate.getForObject(BACKEND_URL + "/blog-api/seoul-info/culture-list"
-                        , JSONResultCultureInfo.class);
+                        , CultureInfoDTO.class);
 
 
-        return jsonresult;
+        return result;
     }
-
-    private static class JSONResultCultureInfo extends CultureInfoDTO {}
 }
