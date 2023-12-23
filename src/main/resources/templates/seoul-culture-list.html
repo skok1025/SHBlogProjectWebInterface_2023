@@ -53,8 +53,8 @@
                 <div class="container-fluid">
                     <div class="info">
                         <ul>
-                            <li>정보 수집일: 2023.12.23</li>
-                            <li>총 문화생활 개수: 123개</li>
+                            <li>정보 수집일: <span th:text="${cultureInfoDTO.collect_date}">2023.12.23</span></li>
+                            <li>총 문화생활 개수: <span th:text="${cultureInfoDTO.total_count}">100</span>개</li>
                         </ul>
                     </div>
 
