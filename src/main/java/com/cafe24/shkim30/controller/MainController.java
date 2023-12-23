@@ -2,9 +2,11 @@ package com.cafe24.shkim30.controller;
 
 import com.cafe24.shkim30.dto.CategoryDTO;
 import com.cafe24.shkim30.dto.fconline.FcOnlineInfoDTO;
+import com.cafe24.shkim30.dto.seoulinfo.CultureInfoDTO;
 import com.cafe24.shkim30.service.BlogService;
 import com.cafe24.shkim30.service.CategoryService;
 import com.cafe24.shkim30.service.FcOnlineService;
+import com.cafe24.shkim30.service.SeoulInfoService;
 import com.cafe24.shkim30.template.TimeLogTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ public class MainController {
     private final BlogService blogService;
     private final CategoryService categoryService;
     private final FcOnlineService fcOnlineService;
+    private final SeoulInfoService seoulInfoService;
 
     private final TimeLogTemplate timeLogTemplate;
 
@@ -63,6 +66,16 @@ public class MainController {
 
             return "index";
         });
+    }
+
+    @GetMapping("/seoul-culture-list")
+    public String seoulCultureList(Model model) {
+        CultureInfoDTO cultureInfoDTO = seoulInfoService.getCultureList();
+        System.out.println(cultureInfoDTO);
+
+        model.addAttribute("cultureInfoDTO", cultureInfoDTO);
+
+        return "seoul-culture-list";
     }
 
 }

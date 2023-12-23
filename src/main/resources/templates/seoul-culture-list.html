@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Header -->
+        <div th:replace="fragment/header :: base"></div>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+
+        .info {
+            margin: 20px auto;
+            width: 80%;
+            text-align: left;
+            font-style: italic;
+            color: #888;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper" class="min-height-800">
+                <!-- Top navigation-->
+                <div th:replace="fragment/top_navbar :: base"></div>
+                <div th:replace="~{fragment/page_explain :: copyParam ('서울 문화생활 리스트입니다.', '서울시 공공데이터를 기반으로 제공하는 정보입니다.')}"></div>
+                <div class="container-fluid">
+                    <div class="info">
+                        <ul>
+                            <li>정보 수집일: 2023.12.23</li>
+                            <li>총 문화생활 개수: 123개</li>
+                        </ul>
+                    </div>
+
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>이벤트명</th>
+                            <th>이벤트 기간</th>
+                            <th>이벤트 장소</th>
+                            <!--<th>지역</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="eventData, userStat : ${cultureInfoDTO.all_event_list}">
+                            <tr>
+                                <td th:text="${userStat.count}">1</td>
+                                <td th:text="${eventData.EVENT_NM}">예시 이벤트 1</td>
+                                <td th:text="${eventData.EVENT_PLACE}">예시 장소 1</td>
+                                <td th:text="${eventData.EVENT_PERIOD}">2023.01.01 - 2023.01.15</td>
+                                <!--<td th:text="${eventData.EVENT_NM}">예시 지역 1</td>-->
+                            </tr>
+                        </th:block>
+                        <!-- 추가 정보 계속해서 넣어주세요 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- body asset -->
+        <div th:replace="fragment/body_asset :: base"></div>
+
+        <!-- footer -->
+        <div th:replace="fragment/footer :: base"></div>
+    </body>
+</html>
