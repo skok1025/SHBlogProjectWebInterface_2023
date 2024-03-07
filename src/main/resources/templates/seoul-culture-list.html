@@ -41,7 +41,86 @@
         tbody tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
+        .custom-select {
+            display: inline-block;
+            width: auto; /* 또는 원하는 너비 */
+            padding: 0.375rem 1.75rem 0.375rem 0.75rem; /* form-control 스타일을 유사하게 조정 */
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            appearance: none; /* 기본 브라우저 select 스타일 제거 */
+            background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+            background-repeat: no-repeat, repeat;
+            background-position: right 0.75rem top 50%, 0 0;
+            background-size: 8px 10px;
+        }
+
+        .custom-select:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
         </style>
+        <script>
+            // jQuery를 사용하여 버튼 클릭 이벤트 핸들러 설정
+            $(document).ready(function() {
+                // 현재 연도 구하기
+                var currentYear = new Date().getFullYear();
+
+                // 현재 연도와 다음 연도를 옵션으로 추가
+                for (var year = currentYear; year <= currentYear + 1; year++) {
+                    $('#yearSelect').append($('<option>', {
+                        value: year,
+                        text: year
+                    }));
+                }
+
+                $("#yearSelect, #monthSelect").change(function() {
+                    if ($("#monthSelect").val() != "none" && $("#yearSelect").val() == "none") {
+                        alert("년도를 선택해주세요.");
+                        return;
+                    }
+                    init_show();
+                    periodSelect();
+                });
+            });
+
+            function init_show() {
+                $(".culture-info").show();
+            }
+
+            function periodSelect() {
+                var year = $("#yearSelect").val();
+                var month = $("#monthSelect").val();
+
+                var startDate, endDate;
+
+                if (month == "none") { // 월이 선택되지 않은 경우: 전체 년도를 대상으로 함
+                    startDate = new Date(year, 0, 1); // 년도의 시작 (1월 1일)
+                    endDate = new Date(year, 12, 0); // 년도의 마지막 날 (12월 31일)
+                } else { // 월이 선택된 경우: 해당 월의 첫 날과 마지막 날을 계산
+                    startDate = new Date(year, month - 1, 1); // 월은 0부터 시작하므로 1을 뺌
+                    endDate = new Date(year, month, 0); // 다음 달의 0일은 이번 달의 마지막 날과 같음
+                }
+
+                $(".culture-info").each(function() {
+                    var eventStartDate = new Date($(this).data("start-date"));
+                    var eventEndDate = new Date($(this).data("end-date"));
+
+                    // 이벤트 기간이 사용자가 선택한 기간과 겹치는지 확인
+                    if (eventStartDate <= endDate && eventEndDate >= startDate) {
+                        $(this).show(); // 기간 내에 있으면 보이도록 설정
+                    } else {
+                        $(this).hide(); // 기간 내에 없으면 숨김
+                    }
+                });
+            }
+        </script>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -58,6 +137,30 @@
                         </ul>
                     </div>
 
+                    <div class="select-container">
+                        <!-- 년도 선택 -->
+                        <select id="yearSelect" class="custom-select">
+                            <option value="none">=======년 선택=======</option>
+                        </select>
+
+                        <!-- 월 선택 -->
+                        <select id="monthSelect" class="custom-select">
+                            <option value="none">=======월 선택=======</option>
+                            <option value="01">1월</option>
+                            <option value="02">2월</option>
+                            <option value="03">3월</option>
+                            <option value="04">4월</option>
+                            <option value="05">5월</option>
+                            <option value="06">6월</option>
+                            <option value="07">7월</option>
+                            <option value="08">8월</option>
+                            <option value="09">9월</option>
+                            <option value="10">10월</option>
+                            <option value="11">11월</option>
+                            <option value="12">12월</option>
+                        </select>
+                    </div>
+
                     <table>
                         <thead>
                         <tr>
@@ -70,7 +173,7 @@
                         </thead>
                         <tbody>
                         <th:block th:each="eventData, userStat : ${cultureInfoDTO.all_event_list}">
-                            <tr>
+                            <tr class="culture-info" th:data-start-date="${eventData.EVENT_START_DATE}" th:data-end-date="${eventData.EVENT_END_DATE}">
                                 <td th:text="${userStat.count}">1</td>
                                 <td th:text="${eventData.EVENT_NM}">예시 이벤트 1</td>
                                 <td th:text="${eventData.EVENT_PLACE}">예시 장소 1</td>
