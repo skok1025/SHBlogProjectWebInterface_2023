@@ -10,7 +10,7 @@
       <a class="a_deco_none" th:href="@{/(category_no=${categoryData.no})}" href="/blog?category_no=${categoryData.no}"><span th:text="${categoryData.name}">카테고리1</span></a>
     </div>
   </th:block>
-  <div id="fconline-tab">
+  <div id="fconline-tab"  th:if="${fcOnlineInfoDTO != null}">
     <h4>My <img style="zoom:0.1 !important" th:src="@{/assets/fconline/logo.png}" alt="FC Online"></h4>
     <ul>
       <li><span class="bold-font">닉네임: </span><span th:text="${fcOnlineInfoDTO.basicUserInfoDTO.nickname}"></span></li>
