@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Header -->
+        <div th:replace="fragment/header :: base"></div>
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper" class="min-height-800">
+                <!-- Top navigation-->
+                <div th:replace="fragment/top_navbar :: base"></div>
+                <div th:replace="~{fragment/page_explain :: copyParam ('', '')}"></div>
+                <div class="container-fluid">
+                    <iframe
+                            src="https://skok1025.shop/lunch"
+                            width="100%"
+                            height="900px"
+                            allow="geolocation *;"
+                            scrolling="no">
+
+                    </iframe>
+                </div>
+
+        </div>
+
+        <!-- body asset -->
+        <div th:replace="fragment/body_asset :: base"></div>
+    </body>
+</html>

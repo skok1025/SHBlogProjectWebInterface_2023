@@ -20,6 +20,7 @@
             </section>
           </li>
           <li class="nav-item active"><a class="nav-link"  th:href="@{/}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/blog/lunch-select" th:text="#{nav.lunch-select}">lunch-select</a></li>
           <li class="nav-item"><a class="nav-link" href="/blog/seoul-culture-list" th:text="#{nav.seoul_culture_list}">서울 문화생활 List</a></li>
           <li th:if="${session.loginUserId!=null}" class="nav-item"><a class="nav-link" href="/blog/admin/category" th:text="#{nav.category}">카테고리 관리</a></li>
           <li th:if="${session.loginUserId!=null}" class="nav-item"><a class="nav-link" href="/blog/add" th:text="#{nav.blog}">게시물 등록</a></li>
