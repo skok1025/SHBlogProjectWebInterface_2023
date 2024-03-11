@@ -78,4 +78,9 @@ public class MainController {
         return "seoul-culture-list";
     }
 
+    @GetMapping("/lunch-select")
+    public String lunchSelect(Model model) {
+        return "lunch-select";
+    }
+
 }
