@@ -1,9 +1,0 @@
-spring:
-  profiles: prod
-server:
-  port: 82
-  servlet:
-    context-path: /blog
-constant:
-  backendUrl: http://shkim3000.cafe24.com:81
-  fconlineUserName: 유니폼어색한메시
