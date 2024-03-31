@@ -3,7 +3,7 @@ spring:
 server:
   port: 80
   servlet:
-    context-path: /
+    context-path: /blog
 constant:
-  backendUrl: http://shkim30.cafe24.com
+  backendUrl: http://shkim3000.cafe24.com:81
   fconlineUserName: 유니폼어색한메시
