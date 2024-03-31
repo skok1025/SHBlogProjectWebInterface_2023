@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.cafe24.shkim30'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
