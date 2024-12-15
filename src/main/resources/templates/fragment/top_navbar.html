@@ -24,6 +24,22 @@
           <li class="nav-item"><a class="nav-link" href="/blog/seoul-culture-list" th:text="#{nav.seoul_culture_list}">서울 문화생활 List</a></li>
           <li th:if="${session.loginUserId!=null}" class="nav-item"><a class="nav-link" href="/blog/admin/category" th:text="#{nav.category}">카테고리 관리</a></li>
           <li th:if="${session.loginUserId!=null}" class="nav-item"><a class="nav-link" href="/blog/add" th:text="#{nav.blog}">게시물 등록</a></li>
+          <li th:if="${session.loginUserId!=null}" class="nav-item">
+            <a class="nav-link" href="https://shkim3000.cafe24.com:9060/dashboards" target="_blank">
+              <img th:src="@{/assets/grafana.jpg}" alt="Grafana" style="width: 16px; height: 16px;">Grafana
+            </a>
+          </li>
+          <li th:if="${session.loginUserId!=null}" class="nav-item">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                나의학습
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" target="_blank" href="https://www.inflearn.com/my/list">Inflearn</a></li>
+                <li><a class="dropdown-item" target="_blank" href="https://www.udemy.com/home/my-courses/learning/">Udemy</a></li>
+              </ul>
+            </div>
+          </li>
           <li th:if="${session.loginUserId==null}" class="nav-item"><a class="nav-link" href="/blog/login" th:text="#{nav.login}">로그인</a></li>
           <li th:if="${session.loginUserId!=null}" class="nav-item"><a class="nav-link" href="/blog/logout" th:text="#{nav.logout}">로그아웃</a></li>
           <!--
