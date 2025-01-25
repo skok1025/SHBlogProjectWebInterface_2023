@@ -11601,3 +11601,211 @@ form{
       text-decoration: none;
        color: black;
 }
+
+/* 기본 스타일 설정 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* 전체 컨테이너 스타일 */
+.stock_info {
+  zoom:0.8;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 300px;
+}
+
+/* 제목 및 기본 정보 */
+.stock_info h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #333;
+}
+
+.stock_info .quot {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.stock_info .state {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.stock_info .date {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* 현재 주식값 */
+.no_today {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.no_up {
+  color: #e74c3c; /* 상승 시 발간색 */
+}
+
+.no_down {
+  color: blue; /* 하락 시 파란색 */
+}
+
+/* 전일 대비 상태 */
+.no_exday {
+  margin-top: 10px;
+}
+
+.no_exday .txt_comparison {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.no_exday .ico {
+  margin-right: 5px;
+}
+
+.no_exday .ico.up::before {
+  content: "▲"; /* 상승 아이콘 */
+  color: #e74c3c;
+}
+
+.no_exday .ico.down::before {
+  content: "▼"; /* 하락 아이콘 */
+  color: blue;
+}
+
+/* 퍼센트 변화 */
+.no_exday .per {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* 전체 컨테이너 */
+.stock_info {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+    height: 250px; /* 각 지수의 높이를 적당히 설정 */
+}
+/* 기본 설정 */
+.stock_info > span {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    opacity: 0;  /* 시작할 때는 숨겨둠 */
+    visibility: hidden; /* 보이지 않도록 설정 */
+    transition: opacity 1s, visibility 1s; /* 부드럽게 전환 */
+}
+
+/* 초기 상태에서 첫 번째 주식 지수는 보이게 하기 */
+.stock_info > span:first-child {
+    opacity: 1;
+    visibility: visible;
+    animation-delay: 0s; /* 지연 없음 */
+}
+
+/* 애니메이션: 각 지수 보여주기 */
+@keyframes slideShow {
+    0% {
+        opacity: 0;
+        visibility: hidden;  /* 처음에는 보이지 않음 */
+    }
+    10% {
+        opacity: 1;
+        visibility: visible; /* 빠르게 나타남 */
+    }
+    45% {
+        opacity: 1;
+        visibility: visible; /* 충분히 머뭄 */
+    }
+    55% {
+        opacity: 0;
+        visibility: visible; /* 서서히 사라짐 */
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden; /* 완전히 사라짐 */
+    }
+}
+
+/* 각 주식 지수별 애니메이션 */
+.stock_info_s&p500 {
+    animation: slideShow 12s infinite; /* 12초 간격으로 반복 */
+}
+
+.stock_info_nasdaq {
+    animation: slideShow 12s infinite 4s; /* 4초 뒤에 시작 */
+}
+
+.stock_info_dow {
+    animation: slideShow 12s infinite 8s; /* 8초 뒤에 시작 */
+}
+
+/* 마우스를 올리면 애니메이션 멈추기 */
+.stock_info:hover .stock_info > span {
+    animation-play-state: paused; /* 애니메이션 멈추기 */
+}
+
+/* 마우스를 올리면 애니메이션 멈추기 */
+.stock_info:hover > span {
+    animation-play-state: paused; /* 애니메이션 멈추기 */
+}
+
+.toss-icon-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* 아이콘과 텍스트 간 간격 */
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.toss-icon-link a {
+    text-decoration: none;
+    color: #0073e6; /* 토스 로고와 비슷한 색상 */
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toss-icon-link a:hover {
+    color: #005bb5; /* 호버 시 약간 어두운 색으로 변경 */
+}
+
+.toss-icon {
+    width: 24px; /* 아이콘 크기 */
+    height: 24px;
+    border-radius: 50%; /* 둥근 아이콘 */
+    object-fit: cover; /* 아이콘 크기에 맞게 조정 */
+}

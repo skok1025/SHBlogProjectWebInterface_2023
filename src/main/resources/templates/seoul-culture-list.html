@@ -175,8 +175,18 @@
                         <th:block th:each="eventData, userStat : ${cultureInfoDTO.all_event_list}">
                             <tr class="culture-info" th:data-start-date="${eventData.EVENT_START_DATE}" th:data-end-date="${eventData.EVENT_END_DATE}">
                                 <td th:text="${userStat.count}">1</td>
-                                <td th:text="${eventData.EVENT_NM}">예시 이벤트 1</td>
-                                <td th:text="${eventData.EVENT_PLACE}">예시 장소 1</td>
+                                <td>
+                                    <a th:href="|https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${eventData.EVENT_NM}|"
+                                       th:text="${eventData.EVENT_NM}" target="_blank">
+                                        예시 이벤트 1
+                                    </a>
+                                </td>
+                                <td>
+                                    <a th:href="|https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${eventData.EVENT_PLACE}|"
+                                       th:text="${eventData.EVENT_PLACE}" target="_blank">
+                                        예시 장소 1
+                                    </a>
+                                </td>
                                 <td th:text="${eventData.EVENT_PERIOD}">2023.01.01 - 2023.01.15</td>
                                 <!--<td th:text="${eventData.EVENT_NM}">예시 지역 1</td>-->
                             </tr>

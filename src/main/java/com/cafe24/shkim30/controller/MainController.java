@@ -11,6 +11,8 @@ import com.cafe24.shkim30.template.TimeLogTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,8 @@ public class MainController {
     private final SeoulInfoService seoulInfoService;
 
     private final TimeLogTemplate timeLogTemplate;
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Value("${constant.fconlineUserName}")
     public String fcOnlineUserName;
@@ -63,6 +67,21 @@ public class MainController {
             model.addAttribute("fcOnlineInfoDTO", fcOnlineInfoDTO);
 
             System.out.println(fcOnlineInfoDTO);
+
+            // redis 에서 주식정보 가져오기
+            HashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
+
+            model.addAttribute("s_ptodayInfo", hashOps.get("stock:S&P500", "today_info"));
+            model.addAttribute("s_pexdayInfo", hashOps.get("stock:S&P500", "exday_info"));
+            model.addAttribute("s_ptimeInfo", hashOps.get("stock:S&P500", "time_info"));
+
+            model.addAttribute("nasdaq_todayInfo", hashOps.get("stock:NASDAQ", "today_info"));
+            model.addAttribute("nasdaq_exdayInfo", hashOps.get("stock:NASDAQ", "exday_info"));
+            model.addAttribute("nasdaq_timeInfo", hashOps.get("stock:NASDAQ", "time_info"));
+
+            model.addAttribute("dow_todayInfo", hashOps.get("stock:DOW", "today_info"));
+            model.addAttribute("dow_exdayInfo", hashOps.get("stock:DOW", "exday_info"));
+            model.addAttribute("dow_timeInfo", hashOps.get("stock:DOW", "time_info"));
 
             return "index";
         });

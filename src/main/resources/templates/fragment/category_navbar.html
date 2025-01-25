@@ -10,6 +10,31 @@
       <a class="a_deco_none" th:href="@{/(category_no=${categoryData.no})}" href="/blog?category_no=${categoryData.no}"><span th:text="${categoryData.name}">카테고리1</span></a>
     </div>
   </th:block>
+  <div class="stock_info">
+    <span class="stock_info_s&p500">
+        <span th:utext="${s_ptimeInfo}"></span>
+        <span th:utext="${s_ptodayInfo}"></span>
+        <span th:utext="${s_pexdayInfo}"></span>
+    </span>
+
+    <span class="stock_info_nasdaq">
+        <span th:utext="${nasdaq_timeInfo}"></span>
+        <span th:utext="${nasdaq_todayInfo}"></span>
+        <span th:utext="${nasdaq_exdayInfo}"></span>
+    </span>
+
+    <span class="stock_info_dow">
+        <span th:utext="${dow_timeInfo}"></span>
+        <span th:utext="${dow_todayInfo}"></span>
+        <span th:utext="${dow_exdayInfo}"></span>
+    </span>
+  </div>
+    <div class="toss-icon-link">
+        <a href="https://tossinvest.com/" target="_blank" rel="noopener noreferrer">
+            <img th:src="@{/assets/toss.jpg}" alt="토스증권" class="toss-icon">
+            <span>토스증권</span>
+        </a>
+    </div>
   <div id="fconline-tab"  th:if="${fcOnlineInfoDTO != null}">
     <h4>My <img style="zoom:0.1 !important" th:src="@{/assets/fconline/logo.png}" alt="FC Online"></h4>
     <ul>

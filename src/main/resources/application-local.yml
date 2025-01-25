@@ -7,3 +7,5 @@ server:
 constant:
   backendUrl: http://localhost:8082
   fconlineUserName: 유니폼어색한메시
+redis:
+  host: localhost
