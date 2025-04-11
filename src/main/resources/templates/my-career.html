@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Header -->
+        <div th:replace="fragment/header :: base"></div>
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper" class="min-height-800">
+                <!-- Top navigation-->
+                <div th:replace="fragment/top_navbar :: base"></div>
+                <iframe src="https://scrawny-plier-ce5.notion.site/ebd/ff51c40e400749fc8f6a36005e1563c0" width="100%" height="850" frameborder="0" allowfullscreen />            </div>
+        </div>
+
+        <!-- body asset -->
+        <div th:replace="fragment/body_asset :: base"></div>
+
+        <!-- footer -->
+        <div th:replace="fragment/footer :: base"></div>
+    </body>
+</html>

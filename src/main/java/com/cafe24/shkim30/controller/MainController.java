@@ -97,6 +97,11 @@ public class MainController {
         return "seoul-culture-list";
     }
 
+    @GetMapping("/my-career")
+    public String myCareer() {
+        return "my-career";
+    }
+
     @GetMapping("/lunch-select")
     public String lunchSelect(Model model) {
         return "lunch-select";
