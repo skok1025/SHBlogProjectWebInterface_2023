@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TimeLogTemplate {
 
-    public <T> T execute(String checkPage, TimeLogCallback<T> callback) {
+    public <T> T execute(String checkPage, TimeLogCallback<T> callback) throws Exception {
         long startTime = System.currentTimeMillis();
         T result = callback.call();
         long endTime = System.currentTimeMillis();

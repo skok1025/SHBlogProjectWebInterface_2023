@@ -3,6 +3,7 @@ package com.cafe24.shkim30.controller;
 import com.cafe24.shkim30.dto.CategoryDTO;
 import com.cafe24.shkim30.dto.fconline.FcOnlineInfoDTO;
 import com.cafe24.shkim30.dto.seoulinfo.CultureInfoDTO;
+import com.cafe24.shkim30.library.TokenGenerator;
 import com.cafe24.shkim30.service.BlogService;
 import com.cafe24.shkim30.service.CategoryService;
 import com.cafe24.shkim30.service.FcOnlineService;
@@ -38,6 +39,9 @@ public class MainController {
     @Value("${constant.fconlineUserName}")
     public String fcOnlineUserName;
 
+    @Value("${constant.serverSecret}")
+    public String serverSecret;
+
 
     @GetMapping("/basic-template")
     public String basicTemplate() {
@@ -50,7 +54,7 @@ public class MainController {
             HttpSession httpSession,
             @RequestParam(defaultValue = "1") Integer currentPage,
             @RequestParam(defaultValue = "") Integer category_no,
-            @RequestParam(required = false) String keyword) {
+            @RequestParam(required = false) String keyword) throws Exception {
         return timeLogTemplate.execute("MainPage", () -> {
             if (httpSession != null) {
                 model.addAttribute("blogList", blogService.getMainBlogList(currentPage, category_no, keyword));
@@ -82,6 +86,16 @@ public class MainController {
             model.addAttribute("dow_todayInfo", hashOps.get("stock:DOW", "today_info"));
             model.addAttribute("dow_exdayInfo", hashOps.get("stock:DOW", "exday_info"));
             model.addAttribute("dow_timeInfo", hashOps.get("stock:DOW", "time_info"));
+
+            TokenGenerator gen = new TokenGenerator(serverSecret);
+
+            // 1) 유효기간 10분(600초) 토큰 생성
+            try {
+                String token = gen.generateTokenWithValidity(600);
+                model.addAttribute("t9n_token", token);
+            } catch (Exception e) {
+
+            }
 
             return "index";
         });
