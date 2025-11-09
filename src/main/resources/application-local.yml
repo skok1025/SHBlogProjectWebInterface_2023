@@ -4,9 +4,20 @@ server:
   port: 8081
   servlet:
     context-path: /blog
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: logs
+      prefix: access_log
+      suffix: .log
+      pattern: '%{X-Forwarded-For}i %h %l %u %t "%r" %s %b'
+    basedir: .
 constant:
   backendUrl: http://localhost:8082
   fconlineUserName: 유니폼어색한메시
   serverSecret: _
+custom:
+  log:
+    basedir: C:/workspace/shblog
 redis:
   host: localhost

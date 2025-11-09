@@ -3,14 +3,18 @@ package com.cafe24.shkim30.controller;
 import com.cafe24.shkim30.dto.CategoryDTO;
 import com.cafe24.shkim30.dto.fconline.FcOnlineInfoDTO;
 import com.cafe24.shkim30.dto.seoulinfo.CultureInfoDTO;
+import com.cafe24.shkim30.library.LibLog;
 import com.cafe24.shkim30.library.TokenGenerator;
 import com.cafe24.shkim30.service.BlogService;
 import com.cafe24.shkim30.service.CategoryService;
 import com.cafe24.shkim30.service.FcOnlineService;
 import com.cafe24.shkim30.service.SeoulInfoService;
 import com.cafe24.shkim30.template.TimeLogTemplate;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,7 +24,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -45,6 +51,19 @@ public class MainController {
 
     @GetMapping("/basic-template")
     public String basicTemplate() {
+        LibLog.getInstance().write("test_log_key1", Map.of(
+                "user", "유니폼어색한메시",
+                "score", 3,
+                "opponent", "상대팀",
+                "result", "win"
+        ));
+
+        LibLog.getInstance().write("test_log_key2", Map.of(
+                "name", "kim",
+                "score", 80
+        ));
+
+
         return "basic-template";
     }
 
