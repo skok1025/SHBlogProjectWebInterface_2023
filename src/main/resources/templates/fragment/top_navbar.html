@@ -40,6 +40,7 @@
                 <li><a class="dropdown-item" target="_blank" href="https://shkim3000.cafe24.com:9097" th:text="#{nav.shopchat}">쇼핑채팅</a></li>
                 <li><a class="dropdown-item" target="_blank" href="https://shkim3000.cafe24.com:9098" th:text="#{nav.stockchat}">주식채팅</a></li>
                 <li><a class="dropdown-item" target="_blank" href="https://shkim3000.cafe24.com:5174" th:text="#{nav.slowfood}">slow-food</a></li>
+                <li th:if="${session.loginUserId!=null}"><a class="dropdown-item" target="_blank" href="https://shkim3000.cafe24.com:9070/photo" th:text="#{nav.photo}">똔똔과켠켠</a></li>
            </ul>
             </div>
           </li>
